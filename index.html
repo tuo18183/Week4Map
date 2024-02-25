@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Leaflet Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+</head>
+
+<body>
+
+  <div id="map" style="width: 600px; height: 400px"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="Program Sites.geojson"></script>
+
+  <script>
+
+    var map = L.map('map').setView([39.95, -75], 10);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+  attribution: 'Map data &copy; <a href="https://w.1652ww.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  maxZoom: 18,
+  id: 'mapbox/streets-v11', 
+  accessToken: 'pk.eyJ1IjoidHVvMTgxODMiLCJhIjoiY2xzbW5qbjQ3MHAyMTJpbGZrdXhjb245ZSJ9.ytBZNsdFeSARGKOpIYUCNw'
+}).addTo(map);
+
+    var ProgramSites = L.geoJson(ProgramSites, {
+  pointToLayer: function(feature, latlng) {
+    return L.circleMarker(latlng, {
+      radius: 9,
+      color: 'green'
+    });
+  },
+
+  filter: function(feature) {
+    return feature.properties.PARK_NAME === 'Frank Glavin Playground';
+  }
+}).addTo(map);
+
+  </script>
+
+</body>
+</html>
